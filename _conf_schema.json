@@ -1,0 +1,63 @@
+{
+  "amap_key": {
+    "description": "高德地图 API Key",
+    "type": "string",
+    "hint": "用于地址→坐标转换。免费申请: https://console.amap.com/ → 创建应用 → Web服务。留空则用 Nominatim 免费兜底",
+    "default": "",
+    "is_sensitive": true
+  },
+  "cooldown": {
+    "description": "浏览器冷窗期（秒）",
+    "type": "int",
+    "hint": "冷窗期内复用浏览器进程，超出则关闭重建。推荐 300~900",
+    "default": 600
+  },
+  "headless": {
+    "description": "无头模式",
+    "type": "bool",
+    "hint": "Debian/Linux 无 GUI 服务器需开启。Windows 本地调试请关闭",
+    "default": false
+  },
+  "scroll_times_min": {
+    "description": "最小滚动次数",
+    "type": "int",
+    "hint": "每次查询在 [min, max] 范围内随机滚动",
+    "default": 5
+  },
+  "scroll_times_max": {
+    "description": "最大滚动次数",
+    "type": "int",
+    "hint": "每次查询在 [min, max] 范围内随机滚动",
+    "default": 12
+  },
+  "scroll_distance_min": {
+    "description": "最小滚动距离（像素）",
+    "type": "int",
+    "hint": "每次滚动在 [min, max] 范围内随机",
+    "default": 300
+  },
+  "scroll_distance_max": {
+    "description": "最大滚动距离（像素）",
+    "type": "int",
+    "hint": "每次滚动在 [min, max] 范围内随机",
+    "default": 700
+  },
+  "scroll_interval_min": {
+    "description": "最小滚动间隔（秒）",
+    "type": "float",
+    "hint": "每次滚动后等待 [min, max] 秒",
+    "default": 0.5
+  },
+  "scroll_interval_max": {
+    "description": "最大滚动间隔（秒）",
+    "type": "float",
+    "hint": "每次滚动后等待 [min, max] 秒",
+    "default": 1.5
+  },
+  "debug": {
+    "description": "调试模式",
+    "type": "bool",
+    "hint": "开启后获取商家失败时会截图并输出页面 HTML 结构到日志",
+    "default": false
+  }
+}

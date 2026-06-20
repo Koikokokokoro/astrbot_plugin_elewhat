@@ -1,14 +1,61 @@
-# astrbot-plugin-helloworld
+# 饿了啥
 
-AstrBot 插件模板 / A template plugin for AstrBot plugin feature
+基于吃什么已经满足不了还是不知道吃什么的我而开发的一个插件。通过 Playwright 自动化操控饿了么 H5 页面，实现登录、地址切换、商家列表随机抓取。
 
-> [!NOTE]
-> This repo is just a template of [AstrBot](https://github.com/AstrBotDevs/AstrBot) Plugin.
-> 
-> [AstrBot](https://github.com/AstrBotDevs/AstrBot) is an agentic assistant for both personal and group conversations. It can be deployed across dozens of mainstream instant messaging platforms, including QQ, Telegram, Feishu, DingTalk, Slack, LINE, Discord, Matrix, etc. In addition, it provides a reliable and extensible conversational AI infrastructure for individuals, developers, and teams. Whether you need a personal AI companion, an intelligent customer support agent, an automation assistant, or an enterprise knowledge base, AstrBot enables you to quickly build AI applications directly within your existing messaging workflows.
+## 安装
 
-# Supports
+### 1. 安装依赖
 
-- [AstrBot Repo](https://github.com/AstrBotDevs/AstrBot)
-- [AstrBot Plugin Development Docs (Chinese)](https://docs.astrbot.app/dev/star/plugin-new.html)
-- [AstrBot Plugin Development Docs (English)](https://docs.astrbot.app/en/dev/star/plugin-new.html)
+```bash
+pip install playwright
+playwright install chromium
+```
+
+### 2. 安装插件
+
+将本插件目录放入 AstrBot 的 `plugins/` 目录下，重启 AstrBot 即可。
+
+## 使用
+
+### 登录
+
+```
+/ele_login 13800138000
+```
+
+插件会自动打开 Chromium 浏览器窗口，填写手机号并发送验证码。收到短信后：
+
+```
+/ele_verify 123456
+```
+
+登录成功后会保存登录状态（cookie），后续无需重复登录。
+
+> 如果出现滑块验证码，请在浏览器窗口中手动完成验证后重试。
+
+### 随机推荐
+
+```
+/ele_random 上海市浦东新区张江
+```
+
+插件会：
+1. 切换收货地址（模糊匹配已有地址）
+2. 随机滚动 3-8 次触发懒加载
+3. 提取商家名称、评分、月售、配送费等信息
+4. 去重后随机抽取最多 10 家
+5. 以 JSON 格式输出
+
+### 查看状态
+
+```
+/ele_status
+```
+
+## 注意事项
+
+- 首次运行需手动登录，登录态保存在 `data/cookies.json`
+- 浏览器以**非无头模式**运行，方便处理验证码
+- 如果登录态失效，重新执行 `/ele_login` 即可
+- 饿了么页面结构可能变化，如抓取失败请检查浏览器中的实际页面状态
+- 每次操作会加入随机延时，避免触发反爬
